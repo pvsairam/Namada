@@ -240,4 +240,5 @@ workd="$HOME/.local/share/namada/shielded-expedition.b40d8e9055/"
 wget -qO ${workd}/cometbft/config/addrbook.json https://snapshots.theamsolutions.info/shielded-addrbook.json
 ```
 
-# Good Luck
+
+# <p align="center"> GOOD LUCK </p>
