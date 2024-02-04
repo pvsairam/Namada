@@ -2,28 +2,28 @@
 
 ## NODE SETUP
 
-### install essentials
+### Install Essentials
 
 ```
 sudo apt update; sudo apt upgrade -y
 sudo apt install make clang pkg-config libssl-dev build-essential git jq llvm libudev-dev -y
 ```
 
-### install rust
+### Install Rust
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y 
 source $HOME/.cargo/env
 ```
 
-### install protocol buffers
+### Install Protocol Buffers
 
 ```
 sudo apt update
 sudo apt install protobuf-compiler
 ```
 
-### set variables
+### Set Variables
 
 ```
 CHAIN_ID="shielded-expedition.b40d8e9055"
@@ -32,7 +32,7 @@ VAL_NAME="<YOUR VALIDATOR NAME>"
 EMAIL="<YOUR EMAIL>"
 ```
 
-### make variables permanent
+### Make Variables Permanent
 
 ```
 echo 'export CHAIN_ID='\"${CHAIN_ID}\" >> $HOME/.bash_profile
@@ -41,13 +41,13 @@ echo 'export VAL_NAME='\"${VAL_NAME}\" >> $HOME/.bash_profile
 echo 'export EMAIL='\"${EMAIL}\" >> $HOME/.bash_profile
 ```
 
-### check
+### Check the variables
 
 ```
 cat ~/.bash_profile
 ```
 
-### install pre-compiled Namada binaries - v0.31.0
+### Install pre-compiled Namada Binaries - v0.31.0
 
 ```
 wget https://github.com/anoma/namada/releases/download/v0.31.0/namada-v0.31.0-Linux-x86_64.tar.gz
@@ -56,7 +56,7 @@ sudo mv namada-v0.31.0-Linux-x86_64/namada* /usr/local/bin/
 rm -rf namada*
 ```
 
-### or compile binaries yourself 
+### or Compile Binaries yourself 
 
 ```
 git clone https://github.com/anoma/namada.git
@@ -67,7 +67,7 @@ sudo chmod +x ~/.cargo/bin/namada*
 sudo mv ~/.cargo/bin/namada* /usr/local/bin
  ```
 
-### install CometBft
+### Install CometBft
 
 ```
 mkdir cometbft
@@ -78,19 +78,19 @@ sudo mv cometbft/cometbft /usr/local/bin/
 rm -rf cometbft*
  ```
 
-### check version
+### Check Version
 
 ```
 namada -V
 ```
 
-### initialize chain and working directory
+### Initialize Chain & Working directory
 
 ```
 namada client utils join-network --chain-id $CHAIN_ID
 ```
 
-### add service file
+### Add service file
 
 ```
 sudo tee /etc/systemd/system/namadad.service << EOF
@@ -113,7 +113,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### enable Namada service
+### Enable Namada service
 
 ```
 sudo systemctl enable namadad.service
@@ -121,19 +121,19 @@ sudo systemctl daemon-reload
 sudo systemctl restart namadad.service
 ```
 
-### check logs
+### Check logs
 
 ```
 sudo journalctl -u namadad.service -fn 50 -o cat
 ```
 
-### full node status (if u don`t use standard port 26657, change to a right one)
+### Full node status (if u don`t use standard port 26657, change to a right one)
 
 ```
 curl localhost:26657/status
 ```
 
-### sync status (false =  node synced)
+### Sync status (false =  node synced)
 
 ```
 curl -s localhost:26657/status | jq .result.sync_info.catching_up
@@ -144,37 +144,37 @@ curl -s localhost:26657/status | jq .result.sync_info.catching_up
 
 (Node must by synced)
 
-### generate new key
+### Generate New Key
 
 ```
 namadaw gen --alias "${KEY_NAME}"
 ```
 
-### or recover key from mnemonic
+### or Recover key from mnemonic
 
 ```
 namadaw derive --alias "${KEY_NAME}"
 ```
 
-### check key address
+### Check Key address
 
 ```
 namadaw find --alias "${KEY_NAME}"
 ```
 
-### list all the keys
+### List all the keys
 
 ```
 namadaw  list
 ```
 
-### check balance
+### Check balance
 
 ```
 namadac balance --owner "${KEY_NAME}"
 ```
 
-### initialize validator
+### Initialize validator
 
 ```
 namadac  init-validator \
@@ -186,7 +186,7 @@ namadac  init-validator \
  --email "${EMAIL}"
 ```
 
-### bond tokens to your validator
+### Bond tokens to your validator
 
 ```
 namadac  bond \
@@ -197,45 +197,47 @@ namadac  bond \
 
 # USEFUL TIPS 
 
-### query TX
+### Query TX
 
 ```
 namadac tx-result --tx-hash <TX HASH> --node tcp://149.50.96.147:26657
 ```
 
-### find validator key
+### Find Validator key
 
 ```
 namadac find-validator --tm-address=$(curl -s localhost:26657/status | jq -r .result.validator_info.address)
 ```
 
-### send funds
+### Send Funds
 
 ```
 namada  transfer --target <RECEIVER-KEY(tnam1..)> --source <SENDER-KEY(NAME)> --amount 100 --token NAM 
 ```
 
-### check validator consensus status
+### Check Validator Consensus Status
 
 ```
 namadac validator-state --validator "<Validator address tham1...>"
 ```
 
-### unjail validator
+### UNJAIL validator
 
 ```
 namadac unjail-validator --validator  "<Validator address tham1...>"
 ```
 
-### claim rewards
+### Claim rewards
 
 ```
 namadac claim-rewards --validator "<Validator address tnam1...>"
 ```
 
-### addr-book
+### Addr-book
 
 ```
 workd="$HOME/.local/share/namada/shielded-expedition.b40d8e9055/"
 wget -qO ${workd}/cometbft/config/addrbook.json https://snapshots.theamsolutions.info/shielded-addrbook.json
 ```
+
+# Good Luck
