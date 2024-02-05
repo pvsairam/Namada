@@ -240,6 +240,27 @@ workd="$HOME/.local/share/namada/shielded-expedition.b40d8e9055/"
 wget -qO ${workd}/cometbft/config/addrbook.json https://snapshots.theamsolutions.info/shielded-addrbook.json
 ```
 
+### Install Grafana
+
+```
+cd $HOME && wget -q -O grafana.sh https://raw.githubusercontent.com/pvsairam/Namada/main/grafana.sh && chmod +x grafana.sh && ./grafana.sh
+
+#Grafana is accessible at: http://localhost:9346
+#Login credentials:
+#---------Username: admin
+#---------Password: admin
+#**********************************
+# Open grafana and add to Home/Connections/Your_connections/Data_sources
+# ...new source prometheus with address http://localhost:9344
+# ...click SAVE and TEST button
+#**********************************
+# ...then import to Home/Dashboards/Import_dashboard new dashboard
+# ...Import via grafana.com     ID = 19014
+# Change Validator_ID           for example (D2FE325E52DBC76342A8ACA803767290707FC2CA)
+# Change NAMADA_Chain_ID               for example (public-testnet-********)
+```
+
+
 ## Delete Node
 
 ```
